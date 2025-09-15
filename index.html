@@ -293,6 +293,98 @@
             color: #aaa;
             cursor: pointer;
         }
+
+        /* Estilos para o painel de configurações */
+        .settings-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        /* Estilos para o tema Escuro */
+        body.dark {
+            background: #000;
+            color: #f7f7f7;
+        }
+
+        body.dark header {
+            background-color: #111;
+            border-bottom: 2px solid #555;
+        }
+
+        body.dark .sidebar {
+            background: #222;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.8);
+        }
+
+        body.dark .content {
+            background-color: rgba(30, 30, 30, 0.8);
+        }
+
+        body.dark .course-info-section {
+            background-color: #333;
+            color: #f7f7f7;
+            box-shadow: 0 2px 4px rgba(255,255,255,0.1);
+        }
+
+        body.dark .course-info-section h3 {
+            color: #0099ff;
+        }
+
+        body.dark .course-info-section p, body.dark .course-info-section ul, body.dark .course-info-section li, body.dark .course-info-section strong {
+            color: #ccc;
+        }
+
+        /* Estilos para o tema Claro */
+        body.light {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        body.light header {
+            background-color: #fff;
+            border-bottom: 2px solid #ccc;
+        }
+
+        body.light .sidebar {
+            background: #e9e9e9;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+        }
+
+        body.light .content {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        body.light .course-info-section {
+            background-color: #fff;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        body.light .course-info-section h3 {
+            color: #007bff;
+        }
+
+        /* Estilos para o tamanho da fonte */
+        body.small {
+            font-size: 0.8em;
+        }
+
+        body.large {
+            font-size: 1.2em;
+        }
+
+        /* A modal deve ser compatível com os temas */
+        body.dark .modal-content {
+            background-color: #444;
+            color: #fff;
+        }
+
+        body.light .modal-content {
+            background-color: #f7f7f7;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -408,7 +500,7 @@
     
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
+            <span class="close-btn" data-modal="login">&times;</span>
             <h2>Login</h2>
             <form>
                 <label for="username">Usuário:</label>
@@ -422,7 +514,7 @@
 
     <div id="registerModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
+            <span class="close-btn" data-modal="register">&times;</span>
             <h2>Registro</h2>
             <form>
                 <label for="new-username">Usuário:</label>
@@ -436,6 +528,105 @@
         </div>
     </div>
 
-    
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" data-modal="settings">&times;</span>
+            <h2>Configurações</h2>
+            <div class="settings-options">
+                <label for="theme-select">Tema:</label>
+                <select id="theme-select">
+                    <option value="default">Padrão</option>
+                    <option value="dark">Escuro</option>
+                    <option value="light">Claro</option>
+                </select>
+                <br><br>
+                <label for="font-size-select">Tamanho da Fonte:</label>
+                <select id="font-size-select">
+                    <option value="normal">Normal</option>
+                    <option value="large">Grande</option>
+                    <option value="small">Pequena</option>
+                </select>
+                <br><br>
+                <button id="save-settings-btn">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Captura os elementos da nova modal de configurações e do ícone
+        const settingsIcon = document.querySelector('.settings');
+        const settingsModal = document.getElementById('settingsModal');
+        const closeBtns = document.querySelectorAll('.close-btn');
+
+        // Funções para controlar as modais
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.add('show');
+        }
+
+        function hideModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+
+        // Adiciona evento de clique para abrir a modal de configurações
+        settingsIcon.addEventListener('click', () => {
+            showModal('settingsModal');
+        });
+        
+        // Adiciona evento de clique para fechar a modal quando o botão 'x' é clicado
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const modalId = btn.getAttribute('data-modal') + 'Modal';
+                hideModal(modalId);
+            });
+        });
+
+        // Adiciona evento de clique para fechar a modal quando o usuário clica fora dela
+        window.addEventListener('click', (event) => {
+            if (event.target === settingsModal) {
+                hideModal('settingsModal');
+            }
+        });
+
+        // Funcionalidade de salvamento (apenas um exemplo simples)
+        const saveSettingsBtn = document.getElementById('save-settings-btn');
+        saveSettingsBtn.addEventListener('click', () => {
+            const theme = document.getElementById('theme-select').value;
+            const fontSize = document.getElementById('font-size-select').value;
+            
+            // Aplica as mudanças no corpo do documento
+            document.body.className = ''; // Remove classes anteriores
+            if (theme !== 'default') {
+                document.body.classList.add(theme);
+            }
+            if (fontSize !== 'normal') {
+                document.body.classList.add(fontSize);
+            }
+
+            console.log(`Configurações salvas: Tema = ${theme}, Fonte = ${fontSize}`);
+            hideModal('settingsModal');
+        });
+
+        // JavaScript para a navegação da barra lateral
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            const sections = document.querySelectorAll('.course-info-section');
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = e.currentTarget.getAttribute('data-target');
+
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+        });
+
+    </script>
+
+    <script src="java.js"></script>
 </body>
 </html>
