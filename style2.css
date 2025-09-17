@@ -1,91 +1,48 @@
-/* Adicione este código CSS dentro da sua tag <style> */
-.settings-options {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: flex-start;
+/* Remova todas as outras regras e use apenas estas para a barra lateral */
+
+/* A regra .sidebar-closed no main-container controla tudo */
+.main-container.sidebar-closed .sidebar {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: none;
 }
 
-/* Estilos para o tema Escuro */
-body.dark {
-    background: #000;
-    color: #f7f7f7;
+/* A regra abaixo ajusta a posição do botão */
+.sidebar-toggle-btn {
+    position: absolute;
+    top: 20px;
+    left: 250px; /* Posição inicial do botão */
+    z-index: 10;
+    background-color: #0a4a1c;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: left 0.5s ease;
 }
 
-body.dark header {
-    background-color: #111;
-    border-bottom: 2px solid #555;
+/* E esta regra move o botão quando a barra lateral está fechada */
+.main-container.sidebar-closed .sidebar-toggle-btn {
+    left: 0;
 }
 
-body.dark .sidebar {
-    background: #222;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.8);
+/* Opcional: Rotação da seta */
+.sidebar-toggle-btn .material-icons {
+    transition: transform 0.5s ease;
+}
+.main-container.sidebar-closed .sidebar-toggle-btn .material-icons {
+    transform: rotate(180deg);
 }
 
-body.dark .content {
-    background-color: rgba(30, 30, 30, 0.8);
-}
-
-body.dark .course-info-section {
-    background-color: #333;
-    color: #f7f7f7;
-    box-shadow: 0 2px 4px rgba(255,255,255,0.1);
-}
-
-body.dark .course-info-section h3 {
-    color: #0099ff;
-}
-
-body.dark .course-info-section p, body.dark .course-info-section ul, body.dark .course-info-section li, body.dark .course-info-section strong {
-    color: #ccc;
-}
-
-/* Estilos para o tema Claro */
-body.light {
-    background: #f0f0f0;
-    color: #333;
-}
-
-body.light header {
-    background-color: #fff;
-    border-bottom: 2px solid #ccc;
-}
-
-body.light .sidebar {
-    background: #e9e9e9;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-}
-
-body.light .content {
-    background-color: rgba(255, 255, 255, 0.8);
-}
-
-body.light .course-info-section {
-    background-color: #fff;
-    color: #333;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-body.light .course-info-section h3 {
-    color: #007bff;
-}
-
-/* Estilos para o tamanho da fonte */
-body.small {
-    font-size: 0.8em;
-}
-
-body.large {
-    font-size: 1.2em;
-}
-
-/* A modal deve ser compatível com os temas */
-body.dark .modal-content {
-    background-color: #444;
-    color: #fff;
-}
-
-body.light .modal-content {
-    background-color: #f7f7f7;
-    color: #333;
-}
+.teste{
+   
+    transition: margin-left 0.3s ease; 
+    margin-left: 0; 
+  }
+  
+.teste:hover {
+   
+    margin-left: 20px; 
+  }

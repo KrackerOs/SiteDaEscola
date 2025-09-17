@@ -17,6 +17,7 @@
             min-height: 100vh;
             background: linear-gradient(to bottom, #1E7F3D, #0A4A1C);
             color: #f7f7f7;
+            transition: margin-left 0.3s ease;
         }
 
         header {
@@ -27,7 +28,7 @@
             align-items: center;
             border-bottom: 2px solid #333;
         }
-        
+       
         header .logo {
             display: flex;
             align-items: center;
@@ -36,7 +37,6 @@
         header .logo img {
             height: 150px;
             margin-right: 10px;
-            
         }
 
         .header-info {
@@ -99,22 +99,73 @@
         .main-container {
             display: flex;
             flex: 1;
+            position: relative;
+        }
+
+        #teste:hover{
+            color: red;
         }
 
         .sidebar {
-            width: 200px;
+            width: 250px; /* Alterado de 200px para 250px */
             background: linear-gradient(to top, #0A4A1C, #1E7F3D);
             padding-top: 20px;
             box-shadow: 2px 0 5px rgba(0,0,0,0.5);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: transform 0.3s ease, width 0.3s ease;
+            overflow: visible;
+            z-index: 10;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-250px); /* Alterado de -200px para -250px */
+            width: 0;
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            top: 10px;
+            left: 250px; /* Alterado de 200px para 250px */
+            width: 24px;
+            height: 48px;
+            background: linear-gradient(to top, #0A4A1C, #1E7F3D);
+            border-radius: 0 5px 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+        }
+
+        .sidebar.hidden + .sidebar-toggle {
+            left: 0;
+        }
+
+        .sidebar-toggle .material-icons {
+            color: white;
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.hidden + .sidebar-toggle .material-icons {
+            transform: rotate(180deg);
         }
 
         .sidebar nav ul {
             list-style: none;
             padding: 0;
             margin: 0;
+            overflow: visible;
+            white-space: nowrap;
+        }
+
+        .sidebar nav ul li {
+            position: relative;
+            overflow: visible;
         }
 
         .sidebar nav ul li a {
@@ -124,7 +175,10 @@
             color: #ffffff;
             text-decoration: none;
             font-size: 1.1em;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
         }
 
         .sidebar nav ul li a:hover {
@@ -133,7 +187,40 @@
 
         .sidebar nav ul li a .material-icons {
             margin-right: 10px;
-            font-size: 24px;
+            font-size: 30px;
+            flex-shrink: 0;
+        }
+
+        .sidebar nav ul li a span.text {
+            display: inline-block;
+            max-width: 0;
+            overflow: hidden;
+            transition: max-width 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            vertical-align: bottom;
+        }
+
+        .sidebar:not(.hidden) nav ul li a span.text {
+            max-width: 170px; /* Aumentado para acomodar textos mais longos */
+            opacity: 1;
+        }
+
+        /* Efeito de hover para quando a sidebar está recolhida */
+        .sidebar.hidden nav ul li:hover a {
+            background-color: rgba(255,255,255,0.1);
+            width: auto;
+            transform: translateX(80px); /* Aumentado de 60px para 80px */
+            box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .sidebar.hidden nav ul li:hover a span.text {
+            max-width: 170px; /* Aumentado para textos mais longos */
+            opacity: 1;
+            margin-left: 10px;
+        }
+        
+        #course-info-section  h3{
+            color: rgb(0, 255, 17);
         }
 
         .sidebar .social-media {
@@ -156,6 +243,7 @@
             margin: 20px;
             border-radius: 10px;
             overflow-y: auto;
+            transition: margin-left 0.3s ease;
         }
 
         /* Estilos para as seções de informações do curso */
@@ -392,7 +480,7 @@
     <header>
         <div class="logo">
             <img src="administração.png" alt="Logotipo da escola M.B.T.B.">
-            
+           
         </div>
         <div class="header-info">
             <h1>Curso Técnico de Administração</h1>
@@ -410,15 +498,15 @@
         <aside class="sidebar">
             <nav>
                 <ul>
-                    <li><a href="#" class="sidebar-link" data-target="home-section"><span class="material-icons">home</span><span>INÍCIO</span></a></li>
-                    <li><a href="#" class="sidebar-link" data-target="carga-horaria-section"><span class="material-icons">schedule</span><span>CARGA HORÁRIA</span></a></li>
-                    <li><a href="#" class="sidebar-link" data-target="materias-curso-section"><span class="material-icons">library_books</span><span>MATÉRIAS DO CURSO</span></a></li>
-                    <li><a href="#" class="sidebar-link" data-target="capacidade-alunos-section"><span class="material-icons">group</span><span>CAPACIDADE DE ALUNOS</span></a></li>
-                    <li><a href="#" class="sidebar-link" data-target="materias-diminuidas-section"><span class="material-icons">remove_circle_outline</span><span>MATÉRIAS DIMINUÍDAS</span></a></li>
-                    <li><a href="#" class="sidebar-link" data-target="turno-section"><span class="material-icons">access_time</span><span>TURNO</span></a></li>
-                    <li><a href="#" class="sidebar-link" data-target="requisitos-section"><span class="material-icons">check_circle</span><span>REQUISITOS BÁSICOS</span></a></li>
-                    <li><a href="#" class="sidebar-link" data-target="aulas-campo-section"><span class="material-icons">landscape</span><span>AULAS DE CAMPO</span></a></li>
-                    <li><a href="#" class="sidebar-link" data-target="empregos-disponiveis-section"><span class="material-icons">work</span><span>EMPREGOS DISPONÍVEIS</span></a></li>
+                    <li><a href="#" class="sidebar-link" data-target="home-section"><span class="material-icons">home</span><span class="text">INÍCIO</span></a></li>
+                    <li><a href="#" class="sidebar-link" data-target="carga-horaria-section"><span class="material-icons">schedule</span><span class="text">CARGA HORÁRIA</span></a></li>
+                    <li><a href="#" class="sidebar-link" data-target="materias-curso-section"><span class="material-icons">library_books</span><span class="text">MATÉRIAS DO CURSO</span></a></li>
+                    <li><a href="#" class="sidebar-link" data-target="capacidade-alunos-section"><span class="material-icons">group</span><span class="text">CAPACIDADE DE ALUNOS</span></a></li>
+                    <li><a href="#" class="sidebar-link" data-target="materias-diminuidas-section"><span class="material-icons">remove_circle_outline</span><span class="text">MATÉRIAS DIMINUÍDAS</span></a></li>
+                    <li><a href="#" class="sidebar-link" data-target="turno-section"><span class="material-icons">access_time</span><span class="text">TURNO</span></a></li>
+                    <li><a href="#" class="sidebar-link" data-target="requisitos-section"><span class="material-icons">check_circle</span><span class="text">REQUISITOS BÁSICOS</span></a></li>
+                    <li><a href="#" class="sidebar-link" data-target="aulas-campo-section"><span class="material-icons">landscape</span><span class="text">AULAS DE CAMPO</span></a></li>
+                    <li><a href="#" class="sidebar-link" data-target="empregos-disponiveis-section"><span class="material-icons">work</span><span class="text">EMPREGOS DISPONÍVEIS</span></a></li>
                 </ul>
             </nav>
             <div class="social-media">
@@ -428,6 +516,10 @@
             </div>
         </aside>
 
+        <div class="sidebar-toggle">
+            <span class="material-icons">chevron_right</span>
+        </div>
+
         <main class="content">
             <div id="home-section" class="course-info-section active">
                 <h3>Bem-vindo ao Curso Técnico de Administração!</h3>
@@ -435,7 +527,7 @@
             </div>
 
             <div id="carga-horaria-section" class="course-info-section">
-                <h3>Carga Horária</h3>
+                <h3 id="teste">Carga Horária</h3>
                 <p>O curso tem uma duração de <strong>3 anos</strong>, totalizando <strong>3000 horas</strong> de estudo e prática.</p>
             </div>
 
@@ -497,7 +589,7 @@
             </div>
         </main>
     </div>
-    
+   
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" data-modal="login">&times;</span>
@@ -571,7 +663,7 @@
         settingsIcon.addEventListener('click', () => {
             showModal('settingsModal');
         });
-        
+       
         // Adiciona evento de clique para fechar a modal quando o botão 'x' é clicado
         closeBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -592,7 +684,7 @@
         saveSettingsBtn.addEventListener('click', () => {
             const theme = document.getElementById('theme-select').value;
             const fontSize = document.getElementById('font-size-select').value;
-            
+           
             // Aplica as mudanças no corpo do documento
             document.body.className = ''; // Remove classes anteriores
             if (theme !== 'default') {
@@ -623,6 +715,15 @@
                     document.getElementById(targetId).classList.add('active');
                 });
             });
+        });
+
+        // JavaScript para a funcionalidade de mostrar/ocultar a barra lateral
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarToggle = document.querySelector('.sidebar-toggle');
+        const content = document.querySelector('.content');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
         });
 
     </script>
