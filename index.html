@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curso Técnico de Administração</title>
-    <link rel="stylesheet" href="style2.css">
     <style>
         /* Importação da fonte para os ícones */
         @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+        
+        /* Seu style 1 (não está sendo usado, mas vou incluir o reset dele) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif; /* Usando Arial para consistência */
+        }
 
         body {
             margin: 0;
@@ -28,7 +35,7 @@
             align-items: center;
             border-bottom: 2px solid #333;
         }
-       
+        
         header .logo {
             display: flex;
             align-items: center;
@@ -68,7 +75,7 @@
             color: #fff;
         }
 
-        /* Estilos para os botões de Login e Registro */
+        /* Estilos para os botões de Login e Registro (Mantenho a classe para o futuro, se for adicionar) */
         header .user-actions button {
             background-color: #007bff;
             color: white;
@@ -107,7 +114,7 @@
         }
 
         .sidebar {
-            width: 300px; /* Alterado de 200px para 250px */
+            width: 300px;
             background: linear-gradient(to top, #31583c, #088a31);
             padding-top: 20px;
             box-shadow: 2px 0 5px rgba(0,0,0,0.5);
@@ -117,17 +124,18 @@
             transition: transform 0.3s ease, width 0.3s ease;
             overflow: visible;
             z-index: 10;
+            flex-shrink: 0; /* Impede que a sidebar encolha */
         }
 
         .sidebar.hidden {
-            transform: translateX(-250px); /* Alterado de -200px para -250px */
+            transform: translateX(-300px);
             width: 0;
         }
 
         .sidebar-toggle {
             position: absolute;
             top: 10px;
-            left: 300px; /* Alterado de 200px para 250px */
+            left: 300px; 
             width: 25px;
             height: 48px;
             background: linear-gradient(to top, #0A4A1C, #02ea4bc4);
@@ -139,7 +147,6 @@
             z-index: 100;
             transition: left 0.3s ease;
             box-shadow: 2px 0 5px rgba(0,0,0,0.3);
-            
         }
 
         .sidebar.hidden + .sidebar-toggle {
@@ -155,6 +162,11 @@
         .sidebar.hidden + .sidebar-toggle .material-icons {
             transform: rotate(180deg);
         }
+        
+        /* O ícone na função toggle de desktop deve ser a seta para fechar */
+        .sidebar-toggle.desktop-open .material-icons {
+            content: 'chevron_left'; 
+        }
 
         .sidebar nav ul {
             list-style: none;
@@ -167,7 +179,6 @@
         .sidebar nav ul li {
             position: relative;
             overflow: visible;
-            
         }
 
         .sidebar nav ul li a {
@@ -203,25 +214,25 @@
         }
 
         .sidebar:not(.hidden) nav ul li a span.text {
-            max-width: 170px; /* Aumentado para acomodar textos mais longos */
+            max-width: 170px;
             opacity: 1;
         }
 
-        /* Efeito de hover para quando a sidebar está recolhida */
+        /* Efeito de hover para quando a sidebar está recolhida (Desktop Only) */
         .sidebar.hidden nav ul li:hover a {
             background-color: rgba(255,255,255,0.1);
             width: auto;
-            transform: translateX(80px); /* Aumentado de 60px para 80px */
+            transform: translateX(80px); 
             box-shadow: -2px 0 10px rgba(0,0,0,0.3);
         }
 
         .sidebar.hidden nav ul li:hover a span.text {
-            max-width: 170px; /* Aumentado para textos mais longos */
+            max-width: 170px;
             opacity: 1;
             margin-left: 10px;
         }
         
-        #course-info-section  h3{
+        #course-info-section h3{
             color: rgb(0, 255, 17);
         }
 
@@ -276,13 +287,13 @@
         }
 
         .course-info-section p, .course-info-section ul, .course-info-section li, .course-info-section strong {
-            color: #000; /* Garante que o texto nas seções internas seja preto */
+            color: #000;
         }
 
         /* ESTILOS ESPECÍFICOS PARA OS PARÁGRAFOS NAS SEÇÕES DE NOTÍCIAS */
         .news-section p, .updates-section p {
             line-height: 1.6;
-            color: #000000; /* O texto agora será preto */
+            color: #000000;
         }
 
         /* Estilos para a lista de alunos (agora na área de conteúdo) */
@@ -475,6 +486,141 @@
             background-color: #f7f7f7;
             color: #333;
         }
+        
+        /* ---------------------------------------------------------------------- */
+        /* ## Media Queries (Responsividade) - CÓDIGO NOVO/AJUSTADO */
+        /* ---------------------------------------------------------------------- */
+
+        /* Estilos para telas até 768px de largura (Tablets e Celulares) */
+        @media (max-width: 768px) {
+            
+            /* Cabeçalho */
+            header {
+                flex-direction: column; /* Empilha os itens verticalmente */
+                align-items: center;
+                padding: 10px 15px;
+            }
+
+            header .logo img {
+                height: 60px; /* Diminui o logo */
+            }
+            
+            /* Para telas menores, esconde a imagem do logo para dar espaço */
+            @media (max-width: 450px) {
+                header .logo img {
+                    display: none;
+                }
+            }
+
+            .header-info {
+                margin-left: 0;
+                margin-top: 5px;
+                order: -1; /* Move o título para o topo do header */
+            }
+
+            .header-info h1 {
+                font-size: 1.1em;
+                white-space: normal; /* Permite quebrar linha */
+            }
+
+            .header-info h2 {
+                font-size: 0.7em;
+            }
+
+            header .search-bar {
+                width: 100%;
+                margin: 5px 0;
+            }
+            
+            header .search-bar input {
+                width: 100%; /* Ocupa a largura total */
+                box-sizing: border-box; /* Inclui padding e border na largura */
+            }
+            
+            header .user-actions {
+                /* Apenas o botão de Configurações está visível, mas garantimos que fique no canto */
+                position: absolute;
+                top: 15px;
+                right: 15px;
+            }
+
+            /* Layout Principal (Sidebar e Conteúdo) */
+            .main-container {
+                flex-direction: column; /* Empilha a sidebar e o conteúdo */
+            }
+            
+            /* O sidebar agora se comporta como um modal/menu de tela cheia */
+            .sidebar {
+                width: 100%;
+                height: 100vh;
+                position: fixed;
+                top: 0;
+                left: 0;
+                padding-top: 70px; /* Espaço para o botão de fechar */
+                transform: translateX(-100%); /* Esconde completamente */
+                z-index: 1000; 
+            }
+
+            .sidebar.show {
+                transform: translateX(0); /* Mostra a sidebar no mobile */
+            }
+            
+            .sidebar.hidden {
+                transform: translateX(-100%); /* Garante que 'hidden' esconde no mobile */
+                width: 100%;
+            }
+            
+            /* Botão de Toggle (Menu Hambúrguer) */
+            .sidebar-toggle {
+                position: fixed; /* Fixa o botão para o usuário poder acessar de qualquer lugar */
+                top: 15px;
+                left: 15px;
+                z-index: 1001;
+                width: 40px;
+                height: 40px;
+                background: linear-gradient(to top, #0A4A1C, #02ea4bc4);
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+                left: 15px; /* Posição inicial */
+            }
+            
+            .sidebar-toggle .material-icons {
+                font-size: 30px;
+                transform: none !important; /* Remove a rotação de desktop */
+            }
+            
+            .sidebar.hidden + .sidebar-toggle {
+                left: 15px;
+            }
+            
+            /* Quando a sidebar está aberta (show), o botão de toggle vira o 'x' */
+            .sidebar.show + .sidebar-toggle .material-icons {
+                content: 'close';
+            }
+            
+            .sidebar:not(.show) + .sidebar-toggle .material-icons {
+                 content: 'menu';
+            }
+            
+            /* O conteúdo principal ocupa toda a largura */
+            .content {
+                margin: 15px;
+                padding: 15px;
+                min-height: 80vh;
+            }
+            
+            /* Desabilita o efeito de hover de expansão no mobile */
+            .sidebar.hidden nav ul li:hover a {
+                background-color: transparent;
+                transform: none; 
+                box-shadow: none;
+            }
+
+            .sidebar nav ul li a span.text {
+                max-width: 100%; /* Torna o texto sempre visível na sidebar aberta */
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -482,7 +628,6 @@
     <header>
         <div class="logo">
             <img src="administração.png" alt="Logotipo da escola M.B.T.B.">
-           
         </div>
         <div class="header-info">
             <h1>Curso Técnico de Administração</h1>
@@ -493,11 +638,11 @@
         </div>
         <div class="user-actions">
             <span class="settings material-icons">settings</span>
-        </div>
+            </div>
     </header>
 
     <div class="main-container">
-        <aside class="sidebar">
+        <aside class="sidebar" id="main-sidebar">
             <nav>
                 <ul>
                     <li><a href="#" class="sidebar-link" data-target="home-section"><span class="material-icons">home</span><span class="text">INÍCIO</span></a></li>
@@ -518,7 +663,7 @@
             </div>
         </aside>
 
-        <div class="sidebar-toggle">
+        <div class="sidebar-toggle" id="sidebar-toggle-btn">
             <span class="material-icons">chevron_right</span>
         </div>
 
@@ -591,37 +736,7 @@
             </div>
         </main>
     </div>
-   
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-modal="login">&times;</span>
-            <h2>Login</h2>
-            <form>
-                <label for="username">Usuário:</label>
-                <input type="text" id="username" name="username">
-                <label for="password">Senha:</label>
-                <input type="password" id="password" name="password">
-                <button type="submit">Entrar</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" data-modal="register">&times;</span>
-            <h2>Registro</h2>
-            <form>
-                <label for="new-username">Usuário:</label>
-                <input type="text" id="new-username" name="new-username">
-                <label for="new-email">Email:</label>
-                <input type="email" id="new-email" name="new-email">
-                <label for="new-password">Senha:</label>
-                <input type="password" id="new-password" name="new-password">
-                <button type="submit">Cadastrar</button>
-            </form>
-        </div>
-    </div>
-
+    
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" data-modal="settings">&times;</span>
@@ -647,89 +762,179 @@
     </div>
 
     <script>
-        // Captura os elementos da nova modal de configurações e do ícone
-        const settingsIcon = document.querySelector('.settings');
-        const settingsModal = document.getElementById('settingsModal');
-        const closeBtns = document.querySelectorAll('.close-btn');
-
-        // Funções para controlar as modais
-        function showModal(modalId) {
-            document.getElementById(modalId).classList.add('show');
-        }
-
-        function hideModal(modalId) {
-            document.getElementById(modalId).classList.remove('show');
-        }
-
-        // Adiciona evento de clique para abrir a modal de configurações
-        settingsIcon.addEventListener('click', () => {
-            showModal('settingsModal');
-        });
-       
-        // Adiciona evento de clique para fechar a modal quando o botão 'x' é clicado
-        closeBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const modalId = btn.getAttribute('data-modal') + 'Modal';
-                hideModal(modalId);
-            });
-        });
-
-        // Adiciona evento de clique para fechar a modal quando o usuário clica fora dela
-        window.addEventListener('click', (event) => {
-            if (event.target === settingsModal) {
-                hideModal('settingsModal');
-            }
-        });
-
-        // Funcionalidade de salvamento (apenas um exemplo simples)
-        const saveSettingsBtn = document.getElementById('save-settings-btn');
-        saveSettingsBtn.addEventListener('click', () => {
-            const theme = document.getElementById('theme-select').value;
-            const fontSize = document.getElementById('font-size-select').value;
-           
-            // Aplica as mudanças no corpo do documento
-            document.body.className = ''; // Remove classes anteriores
-            if (theme !== 'default') {
-                document.body.classList.add(theme);
-            }
-            if (fontSize !== 'normal') {
-                document.body.classList.add(fontSize);
-            }
-
-            console.log(`Configurações salvas: Tema = ${theme}, Fonte = ${fontSize}`);
-            hideModal('settingsModal');
-        });
-
-        // JavaScript para a navegação da barra lateral
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             const sidebarLinks = document.querySelectorAll('.sidebar-link');
-            const sections = document.querySelectorAll('.course-info-section');
+            const contentSections = document.querySelectorAll('.course-info-section');
+            const searchInput = document.querySelector('.search-bar input');
+
+            // Captura os elementos da nova modal de configurações e do ícone
+            const settingsIcon = document.querySelector('.settings');
+            const settingsModal = document.getElementById('settingsModal');
+            const closeBtns = document.querySelectorAll('.close-btn');
+            const saveSettingsBtn = document.getElementById('save-settings-btn');
+            
+            // Elementos da Sidebar
+            const sidebar = document.getElementById('main-sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle-btn');
+            const toggleIcon = sidebarToggle.querySelector('.material-icons');
+
+            // ------------------------------------------
+            // Funções de Navegação e Busca
+            // ------------------------------------------
+            function showSection(targetId) {
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                sidebarLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+                const targetSection = document.getElementById(targetId);
+                const targetLink = document.querySelector(`.sidebar-link[data-target="${targetId}"]`);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+                if (targetLink) {
+                    targetLink.classList.add('active');
+                }
+                const existingNoResults = document.getElementById('no-results-section');
+                if (existingNoResults) {
+                    existingNoResults.remove();
+                }
+            }
+
+            // Ativa a seção inicial ao carregar
+            showSection('home-section');
 
             sidebarLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetId = e.currentTarget.getAttribute('data-target');
-
-                    sections.forEach(section => {
-                        section.classList.remove('active');
-                    });
-
-                    document.getElementById(targetId).classList.add('active');
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+                    showSection(targetId);
+                    
+                    // Fechar a sidebar ao clicar no link em mobile
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('show');
+                        toggleIcon.textContent = 'menu';
+                    }
                 });
             });
+
+            searchInput.addEventListener('keyup', function(event) {
+                const searchText = event.target.value.toLowerCase();
+                
+                const existingNoResults = document.getElementById('no-results-section');
+                if (existingNoResults) {
+                    existingNoResults.remove();
+                }
+
+                if (searchText.trim() === '') {
+                    showSection('home-section');
+                    return;
+                }
+
+                let found = false;
+                
+                contentSections.forEach(section => {
+                    const sectionText = section.textContent.toLowerCase();
+                    if (sectionText.includes(searchText)) {
+                        section.classList.add('active');
+                        found = true;
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+
+                if (!found) {
+                    const noResults = document.createElement('div');
+                    noResults.id = 'no-results-section';
+                    noResults.className = 'course-info-section active';
+                    noResults.innerHTML = '<h3>Nenhum Resultado Encontrado</h3><p>Sua pesquisa não retornou nenhum resultado nas seções do site.</p>';
+                    
+                    const mainContent = document.querySelector('main.content');
+                    mainContent.appendChild(noResults);
+                }
+            });
+
+            // ------------------------------------------
+            // Funcionalidade da Sidebar (Desktop/Mobile) - CÓDIGO AJUSTADO
+            // ------------------------------------------
+
+            // Função para configurar o ícone e a classe no desktop
+            function updateSidebarIcon() {
+                if (window.innerWidth > 768) {
+                    if (sidebar.classList.contains('hidden')) {
+                        toggleIcon.textContent = 'chevron_right';
+                    } else {
+                        toggleIcon.textContent = 'chevron_left';
+                    }
+                    sidebar.classList.remove('show'); // Remove a classe mobile
+                } else {
+                    // Mobile: ícone padrão de menu
+                    if (sidebar.classList.contains('show')) {
+                        toggleIcon.textContent = 'close';
+                    } else {
+                        toggleIcon.textContent = 'menu';
+                    }
+                    sidebar.classList.remove('hidden'); // Remove a classe desktop
+                }
+            }
+            
+            sidebarToggle.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    // Lógica Mobile: toggle da classe 'show' (Menu tela cheia)
+                    sidebar.classList.toggle('show');
+                } else {
+                    // Lógica Desktop: toggle da classe 'hidden' (Sidebar recolhida)
+                    sidebar.classList.toggle('hidden');
+                }
+                updateSidebarIcon();
+            });
+            
+            window.addEventListener('resize', updateSidebarIcon); // Atualiza o ícone ao redimensionar
+            updateSidebarIcon(); // Executa na carga
+
+            // ------------------------------------------
+            // Funcionalidade das Modais (Configurações)
+            // ------------------------------------------
+            
+            // Adiciona evento de clique para abrir a modal de configurações
+            settingsIcon.addEventListener('click', () => {
+                settingsModal.classList.add('show');
+            });
+            
+            // Adiciona evento de clique para fechar a modal quando o botão 'x' é clicado
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const modalId = btn.getAttribute('data-modal') + 'Modal';
+                    document.getElementById(modalId).classList.remove('show');
+                });
+            });
+
+            // Adiciona evento de clique para fechar a modal quando o usuário clica fora dela
+            window.addEventListener('click', (event) => {
+                if (event.target === settingsModal) {
+                    settingsModal.classList.remove('show');
+                }
+            });
+
+            // Funcionalidade de salvamento
+            saveSettingsBtn.addEventListener('click', () => {
+                const theme = document.getElementById('theme-select').value;
+                const fontSize = document.getElementById('font-size-select').value;
+                
+                // Aplica as mudanças no corpo do documento
+                document.body.className = ''; // Remove classes anteriores
+                if (theme !== 'default') {
+                    document.body.classList.add(theme);
+                }
+                if (fontSize !== 'normal') {
+                    document.body.classList.add(fontSize);
+                }
+
+                settingsModal.classList.remove('show');
+            });
         });
-
-       
-        const sidebar = document.querySelector('.sidebar');
-        const sidebarToggle = document.querySelector('.sidebar-toggle');
-        const content = document.querySelector('.content');
-
-        sidebarToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('hidden');
-        });
-
+        
     </script>
-
-    <script src="java.js"></script>
 </body>
 </html>
